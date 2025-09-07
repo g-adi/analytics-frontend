@@ -427,15 +427,6 @@ export default function OverviewPage() {
       {/* Error List Section - Collapsible Dropdown */}
       <InvalidPhoneDropdown />
 
-      {/* Raw Analysis Data (if available) */}
-      {analysisData && (
-        <div className="mt-8 bg-white rounded-2xl shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-[#2C3E50] mb-4">Backend Analysis Results</h3>
-          <pre className="bg-[#F7F9FB] p-4 rounded-lg text-sm text-[#2C3E50] overflow-auto max-h-64">
-            {JSON.stringify(analysisData, null, 2)}
-          </pre>
-        </div>
-      )}
     </div>
   )
 }

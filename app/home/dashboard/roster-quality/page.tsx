@@ -275,30 +275,33 @@ export default function RosterQualityPage() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Top - State Wise Provider Distribution spanning full width */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Top Left - License Status Pie Chart */}
+      <PieChart 
+        data={getLicenseStatusData()} 
+        title="License Status"
+      />
+      
+      {/* Top Right - License Status Pie Chart (Duplicate) */}
+      <PieChart 
+        data={getLicenseStatusData()} 
+        title="Providers Missing NPI"
+      />
+      
+      {/* Bottom Left - State Wise Provider Distribution Bar Chart */}
       <BarChart 
         data={getStateWiseData()} 
         title="State Wise Provider Distribution" 
         color="#10B981"
       />
       
-      {/* Bottom - 2-column grid for City Wise and License Status */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Bottom Left - City Wise Provider Distribution Bar Chart */}
-        <BarChart 
-          data={getCityWiseData()} 
-          title="City Wise Provider Distribution" 
-          color="#F59E0B"
-          showDropdown={true}
-        />
-        
-        {/* Bottom Right - License Status Pie Chart */}
-        <PieChart 
-          data={getLicenseStatusData()} 
-          title="License Status"
-        />
-      </div>
+      {/* Bottom Right - City Wise Provider Distribution Bar Chart */}
+      <BarChart 
+        data={getCityWiseData()} 
+        title="City Wise Provider Distribution" 
+        color="#F59E0B"
+        showDropdown={true}
+      />
     </div>
   )
 }
