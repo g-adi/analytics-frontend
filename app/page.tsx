@@ -209,49 +209,33 @@ export default function Home() {
   }
 
   const StateWiseUpload = () => {
-    const [selectedState, setSelectedState] = useState('')
-
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0]
-      if (file && selectedState) {
-        handleStateWiseUpload(selectedState, file)
-        setSelectedState('') // Reset dropdown after upload
-      } else if (file && !selectedState) {
-        alert('Please select a state first')
+      const files = event.target.files
+      if (files) {
+        Array.from(files).forEach((file, index) => {
+          // Use filename or index as state identifier for multiple files
+          const stateIdentifier = `File ${index + 1}`
+          handleStateWiseUpload(stateIdentifier, file)
+        })
       }
     }
 
     return (
       <div className="bg-white rounded-lg shadow-md p-6 border-2 border-dashed border-gray-300 hover:border-primary-500 transition-colors h-full flex flex-col">
         <h3 className="text-lg font-semibold text-gray-800 mb-2">Upload State Wise Data</h3>
-        <p className="text-sm text-gray-600 mb-4 flex-grow">Data organized and categorized by geographical states</p>
+        <p className="text-sm text-gray-600 mb-4 flex-grow">Data organized and categorized by geographical states (multiple files supported)</p>
         
         <div className="mt-auto space-y-3">
-          <select
-            value={selectedState}
-            onChange={(e) => setSelectedState(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-          >
-            <option value="">Select a state...</option>
-            {US_STATES.map(state => (
-              <option key={state} value={state}>{state}</option>
-            ))}
-          </select>
-          
           <label className="block">
             <input
               type="file"
               onChange={handleFileChange}
               className="hidden"
               accept=".csv,.xlsx,.xls,.json"
-              disabled={!selectedState}
+              multiple
             />
-            <div className={`cursor-pointer px-4 py-2 rounded-md text-center transition-colors ${
-              selectedState 
-                ? 'bg-primary-500 hover:bg-primary-600 text-white' 
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            }`}>
-              Choose File
+            <div className="cursor-pointer bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md text-center transition-colors">
+              Choose Files (Multiple)
             </div>
           </label>
           

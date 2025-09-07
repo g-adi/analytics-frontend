@@ -35,6 +35,32 @@ interface DisplayProvider {
   license_number?: string
 }
 
+// Function to format phone number to +1-xxx-xxx-xxxx
+const formatPhoneNumber = (phone: string): string => {
+  // Remove all non-digit characters
+  const digits = phone.replace(/\D/g, '')
+  
+  // Check if it's a valid 10-digit US number
+  if (digits.length === 10) {
+    return `+1-${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`
+  }
+  
+  // Check if it's 11 digits starting with 1
+  if (digits.length === 11 && digits.startsWith('1')) {
+    const tenDigits = digits.slice(1)
+    return `+1-${tenDigits.slice(0, 3)}-${tenDigits.slice(3, 6)}-${tenDigits.slice(6)}`
+  }
+  
+  // Return original if can't format
+  return phone
+}
+
+// Function to check if phone number is valid
+const isValidPhoneNumber = (phone: string): boolean => {
+  const digits = phone.replace(/\D/g, '')
+  return (digits.length === 10) || (digits.length === 11 && digits.startsWith('1'))
+}
+
 interface DisplayData {
   dataQuality: number
   totalProviders: number
@@ -289,7 +315,7 @@ export default function OverviewPage() {
                       <th className="text-left py-3 px-4 font-medium text-[#7F8C8D] text-sm uppercase tracking-wide">Provider Name</th>
                       <th className="text-left py-3 px-4 font-medium text-[#7F8C8D] text-sm uppercase tracking-wide">License Number</th>
                       <th className="text-left py-3 px-4 font-medium text-[#7F8C8D] text-sm uppercase tracking-wide">Invalid Phone</th>
-                      <th className="text-left py-3 px-4 font-medium text-[#7F8C8D] text-sm uppercase tracking-wide">Specialty</th>
+                      <th className="text-left py-3 px-4 font-medium text-[#7F8C8D] text-sm uppercase tracking-wide">Valid Phone</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -311,7 +337,17 @@ export default function OverviewPage() {
                             <span className="text-[#C0392B] font-mono">{provider.phone}</span>
                           </div>
                         </td>
-                        <td className="py-4 px-4 text-[#7F8C8D]">{provider.specialty}</td>
+                        <td className="py-4 px-4">
+                          {isValidPhoneNumber(provider.phone) ? (
+                            <span className="text-green-600 font-mono font-medium">
+                              {formatPhoneNumber(provider.phone)}
+                            </span>
+                          ) : (
+                            <span className="text-gray-400 font-mono">
+                              Invalid format
+                            </span>
+                          )}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -380,7 +416,9 @@ export default function OverviewPage() {
         >
           <h3 className="text-sm font-medium text-[#7F8C8D] uppercase tracking-wide mb-4 text-center">Genuine Providers</h3>
           <div className="flex flex-col items-center justify-center flex-grow">
-            <div className="text-4xl font-bold text-[#2C3E50] mb-2">{displayData.totalProviders.toLocaleString()}</div>
+            <div className="text-4xl font-bold text-[#2C3E50] mb-2">
+              {(Math.round((displayData.duplicates * 100) / displayData.duplicatePercentage) - displayData.duplicates).toLocaleString()}
+            </div>
             <div className="text-sm text-[#7F8C8D]">providers validated and unique</div>
           </div>
         </div>
