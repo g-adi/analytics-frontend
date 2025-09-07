@@ -5,11 +5,10 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const navItems = [
+  { name: 'Chat Assistant', path: '/home/dashboard/npi-validity', special: true },
   { name: 'Overview', path: '/home/dashboard/overview' },
   { name: 'Provider Demographics', path: '/home/dashboard/roster-quality' },
-  { name: 'Chat Assistant', path: '/home/dashboard/npi-validity' },
-  { name: 'Licenses (CA & NY validation only)', path: '/home/dashboard/licenses' },
-  { name: 'Specialty & Geography', path: '/home/dashboard/specialty-geography' },
+  { name: 'State Wise', path: '/home/dashboard/specialty-geography' },
   { name: 'Explore (faceted search)', path: '/home/dashboard/explore' },
   { name: 'Work Queue & Reports', path: '/home/dashboard/work-queue' },
 ]
@@ -53,6 +52,8 @@ export default function DashboardLayout({
                 className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${
                   pathname === item.path
                     ? 'border-primary-500 text-primary-600'
+                    : item.special
+                    ? 'border-transparent text-blue-600 hover:text-blue-700 hover:border-blue-300 bg-blue-50 rounded-t-lg'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
