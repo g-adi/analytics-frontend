@@ -284,11 +284,6 @@ export default function RosterQualityPage() {
           title="License Status"
         />
         
-        {/* Top Right - Missing Documents Pie Chart */}
-        <PieChart 
-          data={missingDocumentsData} 
-          title="Missing Documents"
-        />
         
         {/* Bottom Left - State Wise Provider Distribution Bar Chart */}
         <BarChart 
