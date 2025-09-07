@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation'
 const navItems = [
   { name: 'Overview', path: '/home/dashboard/overview' },
   { name: 'Provider Demographics', path: '/home/dashboard/roster-quality' },
-  { name: 'NPI Validity (Validation Only)', path: '/home/dashboard/npi-validity' },
+  { name: 'Chat Assistant', path: '/home/dashboard/npi-validity' },
   { name: 'Licenses (CA & NY validation only)', path: '/home/dashboard/licenses' },
   { name: 'Specialty & Geography', path: '/home/dashboard/specialty-geography' },
   { name: 'Explore (faceted search)', path: '/home/dashboard/explore' },
