@@ -8,7 +8,7 @@ const navItems = [
   { name: 'Overview', path: '/home/dashboard/overview' },
   { name: 'Provider Demographics', path: '/home/dashboard/roster-quality' },
   { name: 'State Wise', path: '/home/dashboard/specialty-geography' },
-  { name: 'Explore (faceted search)', path: '/home/dashboard/explore' },
+  { name: 'Expired License Report', path: '/home/dashboard/explore' },
   { name: 'Work Queue & Reports', path: '/home/dashboard/work-queue' },
 ]
 
