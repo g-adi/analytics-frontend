@@ -275,33 +275,32 @@ export default function RosterQualityPage() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {/* Top Left - License Status Pie Chart */}
-      <PieChart 
-        data={getLicenseStatusData()} 
-        title="License Status"
-      />
+    <div className="space-y-6">
+      {/* Top - State Wise Provider Distribution Bar Chart (Full Width) */}
+      <div className="w-full">
+        <BarChart 
+          data={getStateWiseData()} 
+          title="State Wise Provider Distribution" 
+          color="#10B981"
+        />
+      </div>
       
-      {/* Top Right - License Status Pie Chart (Duplicate) */}
-      <PieChart 
-        data={getLicenseStatusData()} 
-        title="Providers Missing NPI"
-      />
-      
-      {/* Bottom Left - State Wise Provider Distribution Bar Chart */}
-      <BarChart 
-        data={getStateWiseData()} 
-        title="State Wise Provider Distribution" 
-        color="#10B981"
-      />
-      
-      {/* Bottom Right - City Wise Provider Distribution Bar Chart */}
-      <BarChart 
-        data={getCityWiseData()} 
-        title="City Wise Provider Distribution" 
-        color="#F59E0B"
-        showDropdown={true}
-      />
+      {/* Bottom Row - Two columns */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Bottom Left - License Status Pie Chart */}
+        <PieChart 
+          data={getLicenseStatusData()} 
+          title="License Status"
+        />
+        
+        {/* Bottom Right - City Wise Provider Distribution Bar Chart */}
+        <BarChart 
+          data={getCityWiseData()} 
+          title="City Wise Provider Distribution" 
+          color="#F59E0B"
+          showDropdown={true}
+        />
+      </div>
     </div>
   )
 }

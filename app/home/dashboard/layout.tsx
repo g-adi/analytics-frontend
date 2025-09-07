@@ -9,7 +9,6 @@ const navItems = [
   { name: 'Provider Demographics', path: '/home/dashboard/roster-quality' },
   { name: 'State Wise', path: '/home/dashboard/specialty-geography' },
   { name: 'Expired License Report', path: '/home/dashboard/explore' },
-  { name: 'Work Queue & Reports', path: '/home/dashboard/work-queue' },
 ]
 
 export default function DashboardLayout({
@@ -38,6 +37,70 @@ export default function DashboardLayout({
                 </svg>
                 Chat Assistant
               </Link>
+              <button 
+                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-medium text-sm rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105"
+                onClick={async () => {
+                  try {
+                    console.log('Starting export...')
+                    
+                    const response = await fetch('http://localhost:8001/export', {
+                      method: 'GET',
+                      headers: {
+                        'Accept': 'text/csv, application/csv, */*',
+                      },
+                    })
+                    
+                    console.log('Response status:', response.status)
+                    console.log('Response headers:', response.headers)
+                    
+                    if (!response.ok) {
+                      throw new Error(`HTTP error! status: ${response.status}`)
+                    }
+                    
+                    // Get the CSV data as text first, then create proper CSV blob
+                    const csvText = await response.text()
+                    console.log('CSV text length:', csvText.length)
+                    console.log('First 200 chars:', csvText.substring(0, 200))
+                    
+                    if (csvText.length === 0) {
+                      throw new Error('Received empty file')
+                    }
+                    
+                    // Create proper CSV blob with correct MIME type
+                    const blob = new Blob([csvText], { 
+                      type: 'text/csv;charset=utf-8;' 
+                    })
+                    
+                    // Create a download link
+                    const url = window.URL.createObjectURL(blob)
+                    const link = document.createElement('a')
+                    link.href = url
+                    link.download = `cleaned_data_${new Date().toISOString().split('T')[0]}.csv`
+                    link.style.display = 'none'
+                    
+                    // Trigger download
+                    document.body.appendChild(link)
+                    link.click()
+                    
+                    // Cleanup after a short delay
+                    setTimeout(() => {
+                      document.body.removeChild(link)
+                      window.URL.revokeObjectURL(url)
+                    }, 100)
+                    
+                    console.log('Export completed successfully')
+                    alert('Export completed! Check your downloads folder.')
+                  } catch (error) {
+                    console.error('Export failed:', error)
+                    alert(`Failed to export data: ${error.message}`)
+                  }
+                }}
+              >
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Export Cleaned Data
+              </button>
               <Link 
                 href="/"
                 className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium text-sm rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105"
