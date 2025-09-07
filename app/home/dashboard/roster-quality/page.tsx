@@ -235,7 +235,7 @@ export default function RosterQualityPage() {
                     key={index}
                     cx="50"
                     cy="50"
-                    r="15.915"
+                    r="31.83"
                     fill="transparent"
                     stroke={item.color}
                     strokeWidth="8"
@@ -276,28 +276,27 @@ export default function RosterQualityPage() {
 
   return (
     <div className="space-y-6">
-      {/* 4-section grid layout */}
+      {/* Top - State Wise Provider Distribution spanning full width */}
+      <BarChart 
+        data={getStateWiseData()} 
+        title="State Wise Provider Distribution" 
+        color="#10B981"
+      />
+      
+      {/* Bottom - 2-column grid for City Wise and License Status */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Top Left - License Status Pie Chart */}
-        <PieChart 
-          data={getLicenseStatusData()} 
-          title="License Status"
-        />
-        
-        
-        {/* Bottom Left - State Wise Provider Distribution Bar Chart */}
-        <BarChart 
-          data={getStateWiseData()} 
-          title="State Wise Provider Distribution" 
-          color="#10B981"
-        />
-        
-        {/* Bottom Right - City Wise Provider Distribution Bar Chart */}
+        {/* Bottom Left - City Wise Provider Distribution Bar Chart */}
         <BarChart 
           data={getCityWiseData()} 
           title="City Wise Provider Distribution" 
           color="#F59E0B"
           showDropdown={true}
+        />
+        
+        {/* Bottom Right - License Status Pie Chart */}
+        <PieChart 
+          data={getLicenseStatusData()} 
+          title="License Status"
         />
       </div>
     </div>

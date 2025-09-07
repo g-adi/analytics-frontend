@@ -131,10 +131,10 @@ export default function OverviewPage() {
     const rotation = (percentage / 100) * 180 - 90
 
     return (
-      <div className="flex flex-col items-center">
-        <div className="relative w-32 h-20 mb-4">
+      <div className="flex flex-col items-center mt-12">
+        <div className="relative w-48 h-32 mb-4">
           {/* Background arc */}
-          <svg className="w-32 h-20" viewBox="0 0 128 80">
+          <svg className="w-48 h-32" viewBox="0 0 128 80">
             <path
               d="M 10 70 A 54 54 0 0 1 118 70"
               fill="none"
@@ -154,19 +154,19 @@ export default function OverviewPage() {
           </svg>
           {/* Center dot */}
           <div 
-            className="absolute w-2 h-2 bg-gray-800 rounded-full"
+            className="absolute w-3 h-3 bg-gray-800 rounded-full"
             style={{
-              top: '70px',
-              left: '64px',
+              top: '87.5%',
+              left: '50%',
               transform: 'translate(-50%, -50%)'
             }}
           />
           {/* Needle */}
           <div
-            className="absolute w-0.5 h-6 bg-gray-800"
+            className="absolute w-1 h-8 bg-gray-800"
             style={{ 
-              top: '70px',
-              left: '64px',
+              top: '87.5%',
+              left: '50%',
               transform: `translate(-50%, -100%) rotate(${rotation}deg)`,
               transformOrigin: 'center bottom'
             }}
@@ -182,32 +182,32 @@ export default function OverviewPage() {
     // Use provided percentage from backend if available, otherwise calculate
     const duplicatePercentage = providedPercentage !== undefined ? providedPercentage : (duplicates / total) * 100
     const uniquePercentage = 100 - duplicatePercentage
-    const circumference = 2 * Math.PI * 45
+    const circumference = 2 * Math.PI * 30
     const duplicateStroke = (duplicatePercentage / 100) * circumference
     const uniqueStroke = (uniquePercentage / 100) * circumference
 
     return (
       <div className="flex flex-col items-center">
-        <div className="relative w-32 h-32 mb-4">
-          <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
+        <div className="relative w-80 h-80 mb-4">
+          <svg className="w-80 h-80 transform -rotate-90" viewBox="0 0 100 100">
             {/* Unique providers (green) */}
             <circle
               cx="50"
               cy="50"
-              r="45"
+              r="30"
               fill="none"
               stroke="#27AE60"
-              strokeWidth="10"
+              strokeWidth="8"
               strokeDasharray={`${uniqueStroke} ${circumference}`}
             />
             {/* Duplicates (red) */}
             <circle
               cx="50"
               cy="50"
-              r="45"
+              r="30"
               fill="none"
               stroke="#C0392B"
-              strokeWidth="10"
+              strokeWidth="8"
               strokeDasharray={`${duplicateStroke} ${circumference}`}
               strokeDashoffset={-uniqueStroke}
             />
